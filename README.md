@@ -63,6 +63,9 @@ modules\     三个模块，每个只管一件事，都返回「纯文本行数�
 - 第二作者：小玉、小怡
 - 第三作者：熏制的猪大腿
 
+如果觉得好用的话可以赞助一瓶可乐~ 祝你玩得开心
+![Uploading IMG_9161.png…]()
+
 ---
 
 # Kaogong Ji · The Artificers' Record
