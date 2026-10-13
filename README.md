@@ -9,7 +9,7 @@ Manages DSH When Deepseekharness Won't .
 **厌倦了 DeepSeekHarness 的无征兆崩溃？**
 
 这个小东西能让你在 DSH 崩溃时，以图形化界面的形式轻松**独立运行并排障**。
-
+<img width="1970" height="1359" alt="屏幕截图_13-10-2026_212521_127 0 0 1" src="https://github.com/user-attachments/assets/2a85d8c8-b1b8-480c-bf78-67545138c0d3" />
 ## 目前实现的功能
 
 | 模块 | 功能 |
