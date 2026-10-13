@@ -1,0 +1,19 @@
+{
+  "name": "kaogongji",
+  "version": "1.0.1",
+  "description": "考工记 —— DSH 崩了也能用的体检工具。插件层只做路标与启动，本体独立运行（零第三方依赖，只用 Node 标准库）。",
+  "author": "小寻",
+  "publisher": "小寻",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.ts",
+  "keywords": ["dsh", "dsh-plugin", "diagnostics", "crash-report", "kaogongji"],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "*",
+    "@deepseek-ai/dsh-tools": "*",
+    "@deepseek-ai/schemastery": "*"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

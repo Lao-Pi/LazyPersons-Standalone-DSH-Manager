@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>考工记</title>
+<!-- 知者创物，巧者述之。——《考工记》 · 小寻 2026-10-13（按 F12 才看得见） -->
+<style>
+  /* 汉字走仿宋（公文常见），ASCII 和框线字符走等宽 —— 只换中文就不会毁了对齐。
+     仿宋_GB2312 没装也没关系：系统自带的"仿宋"(simfang.ttf) 笔画同源。 */
+  @font-face{
+    font-family:"kgj-han";
+    src:local("仿宋_GB2312"),local("FangSong_GB2312"),local("仿宋"),local("FangSong"),local("华文仿宋"),local("STFangsong");
+    unicode-range:U+3000-303F,U+4E00-9FFF,U+FF00-FFEF;
+  }
+  :root{
+    --lcd:#8ce6a4;          /* 液晶绿：比荧光绿灰一档 */
+    --lcd-dim:#3f7a52;
+    --bg:#07120b;
+    --grid:rgba(0,0,0,.30);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:var(--bg)}
+  body{
+    color:var(--lcd);
+    font:500 17px/1.8 "kgj-han",Consolas,"Sarasa Mono SC","Microsoft YaHei",monospace;
+    letter-spacing:.5px;
+    -webkit-font-smoothing:none;      /* 关抗锯齿：字边变硬，出像素味 */
+    overflow-x:hidden;
+  }
+  /* 点阵缝：横竖各一层 1px 网格 → 液晶的像素格 */
+  body::before{
+    content:'';position:fixed;inset:0;pointer-events:none;z-index:8;
+    background-image:
+      repeating-linear-gradient(0deg,var(--grid) 0 1px,transparent 1px 3px),
+      repeating-linear-gradient(90deg,var(--grid) 0 1px,transparent 1px 3px);
+  }
+  /* 显像管外壳：四角压暗两层（近边更紧）＋ 左右边缘一点色散——色散只加在边上，
+     中央保持干净，跟 CRT 边缘会聚误差的分布一致；纯液晶不该有色散，这里按 CRT 走。
+     再加 8 秒一轮极轻微呼吸（不规则关键帧，别太刻意）。 */
+  body::after{
+    content:'';position:fixed;inset:0;pointer-events:none;z-index:9;
+    background:radial-gradient(130% 100% at 50% 35%,rgba(140,230,164,.07),transparent 62%);
+    box-shadow:
+      inset 0 0 260px rgba(0,0,0,.95),
+      inset 0 0 90px  rgba(0,0,0,.55),
+      inset 4px 0 14px rgba(255,70,70,.10),
+      inset -4px 0 14px rgba(70,130,255,.10),
+      inset 0 4px 14px rgba(255,70,70,.05),
+      inset 0 -4px 14px rgba(70,130,255,.05);
+    animation:breathe 8s ease-in-out infinite;
+  }
+  @keyframes breathe{
+    0%,100%{opacity:1}
+    38%{opacity:.94}
+    45%{opacity:.995}
+    73%{opacity:.965}
+  }
+  /* 屏幕玻璃的一层斜反光（很淡，压在文字之上才像"前面有块玻璃"） */
+  #glass{
+    position:fixed;inset:0;pointer-events:none;z-index:10;
+    background:linear-gradient(112deg,
+      rgba(200,255,220,.05) 0 20%,
+      rgba(200,255,220,.012) 26% 34%,
+      transparent 42% 60%,
+      rgba(200,255,220,.028) 72% 100%);
+  }
+  /* 开机扫一次 */
+  #scan{position:fixed;left:0;right:0;height:70px;pointer-events:none;z-index:7;
+        background:linear-gradient(180deg,transparent,rgba(140,230,164,.08),transparent);
+        animation:sweep 1.5s ease-out 1 both}
+  @keyframes sweep{from{top:-70px}to{top:100%}}
+  #wrap{padding:18px 26px 70px;max-width:1140px;margin:0 auto;
+        text-shadow:-.35px 0 rgba(255,80,80,.20), .35px 0 rgba(80,140,255,.20), 0 0 1px rgba(140,230,164,.45)}
+  #head{white-space:pre;font-size:15px;line-height:1.35;margin-bottom:14px}
+  #out{white-space:pre-wrap;word-break:break-word}
+  .in{display:flex;gap:8px;align-items:baseline}
+  .ps{color:var(--lcd-dim)}
+  #cmd{flex:1;background:transparent;border:0;outline:0;color:var(--lcd);font:inherit;
+       letter-spacing:inherit;caret-color:var(--lcd)}
+  #cmd:disabled{opacity:.45}
+  #busy{color:var(--lcd-dim);font-size:14px;white-space:nowrap}
+  /* 版权行做成纯视觉层：fixed + user-select:none，全屏全选也带不上它，输出流保持干净 */
+  #foot{
+    position:fixed;right:16px;bottom:10px;z-index:11;
+    color:var(--lcd-dim);font-size:13px;letter-spacing:.5px;
+    user-select:none;pointer-events:none;
+    animation:blink 4.5s steps(1,end) infinite;
+  }
+  @keyframes blink{0%,70%{opacity:.9}71%,100%{opacity:.3}}
+</style>
+</head>
+<body>
+<div id="scan"></div>
+<div id="glass"></div>
+<div id="foot">考工记系统　版权所有 © 春秋战国–2026</div>
+<div id="wrap">
+  <div id="head">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+  考 工 记   ·   K A O   G O N G   J I
+  DSH 体检 · 插件管理 · 报障分析
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓</div>
+  <div id="out"></div>
+  <div class="in"><span class="ps">考工记&gt; </span><input id="cmd" autocomplete="off" spellcheck="false" disabled><span id="busy"></span></div>
+</div>
+<script>
+const out = document.getElementById('out'), cmd = document.getElementById('cmd'), busy = document.getElementById('busy')
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+const down = () => window.scrollTo(0, document.body.scrollHeight)
+const line = (t) => { out.textContent += t + '\n'; down() }
+// 只有开场稿用打字机（短、有味道）；长输出逐行刷，不然要干等
+const typeLine = async (t, per = 10) => { for (const ch of t) { out.textContent += ch; await sleep(per) } out.textContent += '\n'; down() }
+// 超过 50 行就整段刷：几百行的清单逐行 32ms 会把输入框锁十几秒，用户以为程序死了（审稿的人指出的）
+const printLines = async (ls, per = 32) => { const d = ls.length > 50 ? 0 : per; for (const l of ls) { line(l); if (d) await sleep(d) } }
+// 没输出完不许输入：锁住输入框 —— 乱敲会让"现在在答哪个问题"错位
+const lock = (b) => { cmd.disabled = b; busy.textContent = b ? '▌ 正在输出…' : ''; if (!b) cmd.focus() }
+
+async function submit(text) {
+  lock(true)
+  line('考工记> ' + text)
+  let r
+  try { r = await (await fetch('/api/in', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text }) })).json() }
+  catch (e) { line('跟服务断了：' + e.message); return }
+  await printLines(r.lines)
+  if (r.exit) { line(''); line('（服务已停，这个页面可以关了。）'); return }
+  lock(false)
+}
+
+async function boot() {
+  lock(true)
+  const r = await (await fetch('/api/boot')).json()
+  for (const l of r.lines) await typeLine(l, 10)
+  await printLines(r.menu, 0)
+  lock(false)
+}
+
+cmd.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !cmd.disabled) { const v = cmd.value; cmd.value = ''; submit(v) }
+})
+boot()
+</script>
+</body>
+</html>
