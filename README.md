@@ -1,6 +1,11 @@
 # KaoGong Ji-The-Lazy-Person-s-Standalone-DSH-Manager
 Manages DSH When Deepseekharness Won't .
 > **英文版介绍请挪到下面浏览 · English version below ↓**
+>
+> 
+  ⚠如果你的DSH已经崩溃，该插件依旧能实现急救之用。在任意文件夹下载后打开那个.bat文件即可。
+  > **If your DSH has already crashed, this plugin can still serve as an emergency lifeline. Simply download it to any folder and open the .bat file↓**
+
 
 ---
 
